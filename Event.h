@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
-#include <stdbool.h>
+#include <fstream>
 
 #include "Locator.h";
 
@@ -22,16 +22,16 @@ private:
 	char* nameOfEvent;
 	const int idEvent;
 	string dateOfEvent = "";
-	
+
 	Locator lc;
 
 public:
 	Event();
-	Event(char* nameOfEvent, string dateOfEvent);
+	Event(char* nameOfEvent, string dateOfEvent, Locator lc);
 	Event(const Event& ev);
 	~Event();
 	Event& operator=(const Event& ev);
-	
+
 	void setNameOfEvent(char* nameOfEvent);
 	char* getNameOfEvent();
 
@@ -41,6 +41,13 @@ public:
 	bool checkFutureDateOfEvent(string dateOfEvent);
 	bool operator!();
 
+	string getAdminPasscodeEvent();
+	int getIdOfEvent();
+
+	Locator getLocatorForThisEvent();
+	void setLocatorForThisEvent(Locator lc);
+
 	friend ostream& operator<<(ostream& out, Event ev);
-	friend istream& operator>>(istream& in, Event &ev);
+	friend ofstream& operator<<(ofstream& f, Event ev);
+	friend istream& operator>>(istream& in, Event& ev);
 };
