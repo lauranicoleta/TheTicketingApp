@@ -1,7 +1,8 @@
 #include "Locator.h"
 
 
-Locator::Locator(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZone, int* noSeatsRowStandardZone)
+Locator::Locator(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZone, int* noSeatsRowStandardZone, multimap<int, int> bookedVIP,
+multimap<int, int> bookedStandard)
 {
 	if (noRowsVIPZone > 0 && noSeatsRowVIPZone != nullptr)
 	{
@@ -22,7 +23,8 @@ Locator::Locator(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZo
 			this->noSeatsRowStandardZone[i] = noSeatsRowStandardZone[i];
 		}
 	}
-
+	this->bookedVIP = bookedVIP;
+	this->bookedStandard = bookedStandard;
 }
 
 Locator::~Locator()
@@ -61,6 +63,9 @@ Locator::Locator(const Locator& lc)
 			this->noSeatsRowStandardZone[i] = lc.noSeatsRowStandardZone[i];
 		}
 	}
+
+	this->bookedVIP = lc.bookedVIP;
+	this->bookedStandard = lc.bookedStandard;
 }
 
 
@@ -93,7 +98,9 @@ Locator& Locator::operator=(const Locator& lc)
 				this->noSeatsRowStandardZone[i] = lc.noSeatsRowStandardZone[i];
 			}
 		}
-		
+		this->bookedVIP = lc.bookedVIP;
+		this->bookedStandard = lc.bookedStandard;
+
 		return *this;
 	}
 }
@@ -180,10 +187,15 @@ static int getNoMaxOfSeats(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRows
 
 }
 
+void Locator::insertBookedVIP(int a, int b)
+{
+	bookedVIP.insert(pair<int, int>{a, b});
+}
+
 
 istream& operator>>(istream& in, Locator& lc)
 {
-	cout << "enter the distribution of seats of the event hall." << endl;
+	cout << "Enter the distribution of seats of the event hall." << endl;
 	cout << "Enter the number of rows for VIP zone: ";
 	in >> lc.noRowsVIPZone;
 	cout << endl;
@@ -200,7 +212,7 @@ istream& operator>>(istream& in, Locator& lc)
 	lc.noSeatsRowVIPZone = new int[lc.noRowsVIPZone];
 	for (int i = 0; i < lc.noRowsVIPZone; i++)
 	{
-		cout << "Enter the number of seats for row " << i+1 << ": ";
+		cout << "Enter the number of seats for row " << i + 1 << ": ";
 		in >> lc.noSeatsRowVIPZone[i];
 		cout << endl;
 	}
@@ -223,7 +235,7 @@ istream& operator>>(istream& in, Locator& lc)
 
 	for (int i = 0; i < lc.noRowsStandardZone; i++)
 	{
-		cout << "Enter the number of seats for row " << i+1 << ": ";
+		cout << "Enter the number of seats for row " << i + 1 << ": ";
 		in >> lc.noSeatsRowStandardZone[i];
 		cout << endl;
 	}
@@ -231,5 +243,27 @@ istream& operator>>(istream& in, Locator& lc)
 	return in;
 }
 
+ostream& operator<<(ostream& out, Locator lc)
+{
+	out << "\t\t\t*****************       SCREEN       *****************" << endl;
+	out << endl;
+	for (int i = 0; i < lc.noRowsVIPZone; i++)
+	{
+		out << "      VIP Row " << i + 1 << " ";
+		out << "\t";
+		for (int j = 1; j <= lc.noSeatsRowVIPZone[i]; j++)
+					out << "[" << j << "]" << " ";
+		out << endl;
+	}
+	for (int i = 0; i < lc.noRowsStandardZone; i++)
+	{
+		out << " STANDARD Row " << i + 1 << " ";
+		out << "\t";
+		for (int j = 1; j <= lc.noSeatsRowStandardZone[i]; j++)
+					out << "[" << j << "]" << " ";
+		out << endl;
+	}
+	return out;
+}
 
 string Locator::adminPasscodeLocator = "moderatorlocator546";
