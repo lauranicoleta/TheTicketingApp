@@ -68,7 +68,7 @@ bool Client::Email_check(string email)
 //Then the \. | _ matches if a dot or underscore is present 0 or 1 times.
 //Then \w again match n characters.
 //Then @ matches the @ in the email.
-//Then we again check for n charactersand a ‘.’and a word after it, which must be present at least one or more times.
+//Then we again check for n charactersand a â€˜.â€™and a word after it, which must be present at least one or more times.
 
 void Client::setEmail(string email)
 {
@@ -95,7 +95,7 @@ bool operator>(Client& cl1, Client& cl2)
 	return cl1.getFullName() > cl2.getFullName();
 }
 
-ostream& operator<<(ostream& out, Client cl) 
+ostream& operator<<(ostream& out, Client cl)
 {
 	out << "First Name: " << cl.firstName << endl;
 	out << "Last Name: " << cl.lastName << endl;
@@ -127,6 +127,6 @@ istream& operator>>(istream& in, Client& cl)
 	cl.email = buffer;
 	cout << "Please enter your age: ";
 	in >> cl.age; cout << endl;
-	
+
 	return in;
 };
