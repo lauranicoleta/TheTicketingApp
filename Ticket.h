@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 
-#include "Locator.h"
-
+#include "Event.h"
+#include "Client.h"
 
 using namespace std;
 
@@ -15,15 +15,16 @@ protected:
 	static int nextIdTicket;
 private:
 	int idTicket;
-	Locator lc;
-	
+	Event ev;
+	Client cl;
+
 	int rowChoice = 0;
 	int seatChoice = 0;
 	string seatCategoryChoice = "";
 
 public:
 	Ticket();
-	Ticket(string seatCategoryChoice);
+	Ticket(int rowChoice, int seatChoice, string seatCategoryChoice, Event ev, Client cl);
 	~Ticket() = default;
 	Ticket(const Ticket& t);
 
@@ -35,6 +36,14 @@ public:
 
 	void setSeatCategoryChoice(string seatChoice);
 	string getSeatCategoryChoice();
+
+	void setClient(Client cl);
+	Client getClient();
+
+	void setEvent(Event ev);
+	Event getEvent();
+
+	int getTicketId();
 
 	Ticket operator--(int);
 
