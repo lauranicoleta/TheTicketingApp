@@ -1,14 +1,15 @@
 #pragma once
-//static string va fi parola moderatorului, doar moderatorul poate face modificari de tipul
-//stabilirea numarului maxim de locuri, adaugarea evenimentelor, stergerea evenimentelor
+//static string va fi parola moderatorului, doar moderatorul poate face modificari de evenimente
 #include <iostream>
 #include <string>
+#include <map>
+
 
 
 
 using namespace std;
 
-class Locator 
+class Locator
 {
 private:
 	static string adminPasscodeLocator;
@@ -19,9 +20,16 @@ private:
 	int noRowsStandardZone = 0;
 	int* noSeatsRowStandardZone = nullptr;
 
+	//Ticket t;
+
 public:
+
+	multimap<int, int> bookedVIP;
+	multimap<int, int> bookedStandard;
+
 	Locator() = default;
-	Locator(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZone, int* noSeatsRowStandardZone);
+	Locator(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZone, int* noSeatsRowStandardZone, multimap<int, int> bookedVIP,
+	multimap<int, int> bookedStandard);
 	~Locator();
 	Locator(const Locator& lc);
 	Locator& operator=(const Locator& lc);
@@ -40,5 +48,10 @@ public:
 
 	static int getNoMaxOfSeats(int noRowsVIPZone, int* noSeatsRowVIPZone, int noRowsStandardZone, int* noSeatsRowStandardZone);
 
+	void insertBookedVIP(int a, int b);
+
+	/*int& operator[](int index);*/
+
 	friend istream& operator>>(istream& in, Locator& lc);
+	friend ostream& operator<<(ostream& out, Locator lc);
 };
